@@ -551,9 +551,10 @@ var carTimer = null;
 function carAutoStop(){ if(carTimer){ clearInterval(carTimer); carTimer = null; } }
 function carAutoStart(){ carAutoStop(); carTimer = setInterval(function(){ if(document.hidden) return; var maxC = CAROUSEL.length - carVisible(); if(carIndex >= maxC){ carTrack.style.transition = 'none'; carIndex = 0; carUpdate(); setTimeout(function(){ carTrack.style.transition = ''; }, 50); } else { carIndex++; carUpdate(); } }, 4000); }
 carAutoStart();
+var carHoverTimer = null;
 if(carVp){
-  carVp.addEventListener('mouseenter', carAutoStop);
-  carVp.addEventListener('mouseleave', carAutoStart);
+  carVp.addEventListener('mouseenter', function(){ carAutoStop(); if(carHoverTimer) clearTimeout(carHoverTimer); carHoverTimer = setTimeout(carAutoStart, 8000); });
+  carVp.addEventListener('mouseleave', function(){ if(carHoverTimer) clearTimeout(carHoverTimer); carAutoStart(); });
   carVp.addEventListener('touchstart', carAutoStop, {passive:true});
   carVp.addEventListener('touchend', function(){ setTimeout(carAutoStart, 6000); }, {passive:true});
 }
