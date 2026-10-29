@@ -254,7 +254,7 @@ img{display:block;max-width:100%}
 .ficha-includes{color:#666666;font-size:14px;margin:0 0 22px}
 .ficha-actions{display:flex;gap:12px;flex-wrap:wrap}
 @media(max-width:700px){.ficha-grid{grid-template-columns:1fr}.ficha-card{padding:20px}}
-.legal-text{color:#cccccc;line-height:1.7;font-size:15px}.legal-text h2,.legal-text h3,.legal-text h4{color:#ffffff;margin:24px 0 8px}.legal-text p{margin:0 0 12px}.legal-text a{color:var(--accent)}@keyframes gpBlink{0%,100%{opacity:1}50%{opacity:.1}} #osmMap .leaflet-interactive{animation:gpBlink 1s ease-in-out infinite} #posMapSpain .dot,#posMapEurope .dot{animation:gpBlink 1s ease-in-out infinite}@keyframes gpDropFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}} .dropimgwrap img:not(.zoom){animation:gpDropFloat 7s ease-in-out infinite} @keyframes gpSpotZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}} .spot-img img{animation:gpSpotZoom 9s ease-in-out infinite} @keyframes gpProdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}} .cream img{animation:gpProdFloat 5s ease-in-out infinite}</style>
+.legal-text{color:#cccccc;line-height:1.7;font-size:15px}.legal-text h2,.legal-text h3,.legal-text h4{color:#ffffff;margin:24px 0 8px}.legal-text p{margin:0 0 12px}.legal-text a{color:var(--accent)}@keyframes gpDropFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}} .dropimgwrap img:not(.zoom){animation:gpDropFloat 7s ease-in-out infinite} @keyframes gpSpotZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}} .spot-img img{animation:gpSpotZoom 9s ease-in-out infinite} @keyframes gpProdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}} .cream img{animation:gpProdFloat 5s ease-in-out infinite}</style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -273,8 +273,6 @@ img{display:block;max-width:100%}
   <button class="linklike" data-view="about" data-i18n="view_about">ABOUT US</button>
   <button class="linklike" data-view="points" data-i18n="view_points">POINTS OF SALE</button>
   <button class="linklike" data-view="contact" data-i18n="view_contact">CONTACT</button>
-  <button class="linklike" data-view="legal" data-i18n="view_legal">LEGAL NOTICE AND PRIVACY POLICY</button>
-  <button class="linklike" data-view="cookies" data-i18n="view_cookies">COOKIES POLICY</button>
 </aside>
 
 
@@ -403,11 +401,12 @@ img{display:block;max-width:100%}
       <div><h4 style="color:#ffffff" data-i18n="footer_terms">TERMS AND POLICIES</h4><a href="https://www.thegraphicsproject.com/en/policies/refund-policy" data-i18n="policy_refund">Refund policy</a><a href="https://www.thegraphicsproject.com/en/policies/privacy-policy" data-i18n="policy_privacy">Privacy policy</a><a href="https://www.thegraphicsproject.com/en/policies/terms-of-service" data-i18n="policy_terms">Terms of service</a></div>
       <div><h4 style="color:#ffffff">&nbsp;</h4><a href="https://www.thegraphicsproject.com/en/policies/shipping-policy" data-i18n="policy_shipping">Shipping policy</a><a href="https://www.thegraphicsproject.com/en/pages/contact" data-i18n="policy_contact">Contact information</a><a href="https://www.thegraphicsproject.com/en/policies/legal-notice" data-i18n="policy_legal">Legal notice</a></div>
     </div>
+    <p style="text-align:center;margin-top:24px"><a href="#" data-view="legal" data-i18n="view_legal" style="display:inline;margin:0 10px">LEGAL NOTICE AND PRIVACY POLICY</a><span style="color:#999999">·</span><a href="#" data-view="cookies" data-i18n="view_cookies" style="display:inline;margin:0 10px">COOKIES POLICY</a></p>
     <div style="max-width:760px;margin:36px auto 0;text-align:center">
       <img id="imgIgape" alt="Xunta de Galicia · IGAPE · Fondos Europeos" style="border:2px solid var(--accent);margin:0 auto">
       <p style="color:#999999" data-i18n="footer_note">Institutional seal from the original footer, with the IGAPE banner summarised in the previous versions.</p>
       <p><a class="btn-black" href="#top" data-i18n="back_top">BACK TO TOP</a></p>
-      <p class="copy">© 2026 GRAPHICS PROJECT</p>
+      <p class="copy">© 2026 GRAPHICS PROJECT · Concepto v40</p>
     </div>
   </footer>
 </main>
@@ -818,7 +817,7 @@ function renderMap(list){
 }
 
 /* v16: real OpenStreetMap map with satellite layer */
-var osmMap = null, osmLayer = null, osmSelectedMarker = null;
+var osmMap = null, osmLayer = null, osmSelectedMarker = null, osmDots = [];
 function initOsm(){
   if(typeof L === 'undefined') return false;
   if(osmMap) return true;
@@ -836,20 +835,27 @@ function osmPopup(p){
 }
 function updateOsmMarkers(list){
   if(!osmMap) return;
-  osmLayer.clearLayers();
+  osmLayer.clearLayers(); osmDots = [];
   if(osmSelectedMarker){ osmMap.removeLayer(osmSelectedMarker); osmSelectedMarker = null; }
   list.forEach(function(p){
     var gi = POINTS.indexOf(p);
     var c = L.circleMarker([p.lat, p.lon], {radius: 10, color: '#14140c', weight: 1, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.9});
-    c.on('click', function(){ selectPoint(gi); });
+    c.on('click', function(){ selectPoint(gi); }); osmDots.push(c);
     c.addTo(osmLayer);
   });
   if(posSelected !== null){
     var sp = POINTS[posSelected];
     osmSelectedMarker = L.circleMarker([sp.lat, sp.lon], {radius: 11, color: '#14140c', weight: 2, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 1}).addTo(osmMap);
-    osmSelectedMarker.bindPopup(osmPopup(sp)).openPopup();
+    osmSelectedMarker.bindPopup(osmPopup(sp)).openPopup(); osmDots.push(osmSelectedMarker);
   }
 }
+var osmBlinkOn = true;
+setInterval(function(){
+  osmBlinkOn = !osmBlinkOn;
+  var fo = osmBlinkOn ? 0.9 : 0.12, so = osmBlinkOn ? 1 : 0.2;
+  osmDots.forEach(function(m){ try{ m.setStyle({fillOpacity: fo, opacity: so}); }catch(e){} });
+  document.querySelectorAll('#posMapSpain .dot, #posMapEurope .dot').forEach(function(c){ c.setAttribute('opacity', osmBlinkOn ? '1' : '0.12'); });
+}, 500);
 function osmFlyToSelected(){
   if(!osmMap || posSelected === null) return;
   var sp = POINTS[posSelected];
