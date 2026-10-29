@@ -406,7 +406,7 @@ img{display:block;max-width:100%}
       <img id="imgIgape" alt="Xunta de Galicia · IGAPE · Fondos Europeos" style="border:2px solid var(--accent);margin:0 auto">
       <p style="color:#999999" data-i18n="footer_note">Institutional seal from the original footer, with the IGAPE banner summarised in the previous versions.</p>
       <p><a class="btn-black" href="#top" data-i18n="back_top">BACK TO TOP</a></p>
-      <p class="copy">© 2026 GRAPHICS PROJECT · Concepto v40</p>
+      <p class="copy">© 2026 GRAPHICS PROJECT · Concepto v41</p>
     </div>
   </footer>
 </main>
@@ -784,10 +784,10 @@ function renderMap(list){
     var gi = POINTS.indexOf(p);
     if(INTL.indexOf(p.region) >= 0){
       var e = europeXY(p.lat, p.lon);
-      if(p.lon > -20) europeDots += '<circle class="dot" data-pos="' + gi + '" cx="' + e[0].toFixed(1) + '" cy="' + e[1].toFixed(1) + '" r="7" fill="' + (posSelected === gi ? '#e4d000' : (window.__ACCENT || '#e4d000')) + '" stroke="#14140c" stroke-width="1.5"/>';
+      if(p.lon > -20) europeDots += '<circle class="halo" cx="' + e[0].toFixed(1) + '" cy="' + e[1].toFixed(1) + '" r="15" fill="' + (posSelected === gi ? '#e4d000' : (window.__ACCENT || '#e4d000')) + '" opacity="0.35" pointer-events="none"><animate attributeName="opacity" values="0.35;0;0.35" dur="1s" repeatCount="indefinite"/></circle><circle class="dot" data-pos="' + gi + '" cx="' + e[0].toFixed(1) + '" cy="' + e[1].toFixed(1) + '" r="8" fill="' + (posSelected === gi ? '#e4d000' : (window.__ACCENT || '#e4d000')) + '" stroke="#ffffff" stroke-width="2"/>';
     } else {
       var s = spainXY(p.lat, p.lon);
-      spainDots += '<circle class="dot" data-pos="' + gi + '" cx="' + s[0].toFixed(1) + '" cy="' + s[1].toFixed(1) + '" r="6" fill="' + (posSelected === gi ? '#e4d000' : (window.__ACCENT || '#e4d000')) + '" stroke="#14140c" stroke-width="1"/>';
+      spainDots += '<circle class="halo" cx="' + s[0].toFixed(1) + '" cy="' + s[1].toFixed(1) + '" r="14" fill="' + (posSelected === gi ? '#e4d000' : (window.__ACCENT || '#e4d000')) + '" opacity="0.35" pointer-events="none"><animate attributeName="opacity" values="0.35;0;0.35" dur="1s" repeatCount="indefinite"/></circle><circle class="dot" data-pos="' + gi + '" cx="' + s[0].toFixed(1) + '" cy="' + s[1].toFixed(1) + '" r="7" fill="' + (posSelected === gi ? '#e4d000' : (window.__ACCENT || '#e4d000')) + '" stroke="#ffffff" stroke-width="1.5"/>';
     }
   });
   var pin = '';
@@ -817,7 +817,7 @@ function renderMap(list){
 }
 
 /* v16: real OpenStreetMap map with satellite layer */
-var osmMap = null, osmLayer = null, osmSelectedMarker = null, osmDots = [];
+var osmMap = null, osmLayer = null, osmSelectedMarker = null, osmSelectedHalo = null, osmHalos = [];
 function initOsm(){
   if(typeof L === 'undefined') return false;
   if(osmMap) return true;
@@ -835,26 +835,28 @@ function osmPopup(p){
 }
 function updateOsmMarkers(list){
   if(!osmMap) return;
-  osmLayer.clearLayers(); osmDots = [];
+  osmLayer.clearLayers(); osmHalos = [];
   if(osmSelectedMarker){ osmMap.removeLayer(osmSelectedMarker); osmSelectedMarker = null; }
+  if(osmSelectedHalo){ osmMap.removeLayer(osmSelectedHalo); osmSelectedHalo = null; }
   list.forEach(function(p){
     var gi = POINTS.indexOf(p);
-    var c = L.circleMarker([p.lat, p.lon], {radius: 10, color: '#14140c', weight: 1, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.9});
-    c.on('click', function(){ selectPoint(gi); }); osmDots.push(c);
+    var c = L.circleMarker([p.lat, p.lon], {radius: 10, color: '#ffffff', weight: 2, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.9});
+    var h = L.circleMarker([p.lat, p.lon], {radius: 17, color: '#14140c', weight: 0, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.35, interactive: false}); h.addTo(osmLayer); osmHalos.push(h);
+    c.on('click', function(){ selectPoint(gi); });
     c.addTo(osmLayer);
   });
   if(posSelected !== null){
     var sp = POINTS[posSelected];
-    osmSelectedMarker = L.circleMarker([sp.lat, sp.lon], {radius: 11, color: '#14140c', weight: 2, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 1}).addTo(osmMap);
-    osmSelectedMarker.bindPopup(osmPopup(sp)).openPopup(); osmDots.push(osmSelectedMarker);
+    osmSelectedHalo = L.circleMarker([sp.lat, sp.lon], {radius: 19, color: '#14140c', weight: 0, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.35, interactive: false}).addTo(osmMap); osmHalos.push(osmSelectedHalo);
+    osmSelectedMarker = L.circleMarker([sp.lat, sp.lon], {radius: 11, color: '#ffffff', weight: 2, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 1}).addTo(osmMap);
+    osmSelectedMarker.bindPopup(osmPopup(sp)).openPopup();
   }
 }
-var osmBlinkOn = true;
+var osmHaloOn = true;
 setInterval(function(){
-  osmBlinkOn = !osmBlinkOn;
-  var fo = osmBlinkOn ? 0.9 : 0.12, so = osmBlinkOn ? 1 : 0.2;
-  osmDots.forEach(function(m){ try{ m.setStyle({fillOpacity: fo, opacity: so}); }catch(e){} });
-  document.querySelectorAll('#posMapSpain .dot, #posMapEurope .dot').forEach(function(c){ c.setAttribute('opacity', osmBlinkOn ? '1' : '0.12'); });
+  osmHaloOn = !osmHaloOn;
+  var hfo = osmHaloOn ? 0.4 : 0;
+  osmHalos.forEach(function(m){ try{ m.setStyle({fillOpacity: hfo}); }catch(e){} });
 }, 500);
 function osmFlyToSelected(){
   if(!osmMap || posSelected === null) return;
