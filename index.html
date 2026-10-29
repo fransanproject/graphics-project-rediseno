@@ -883,19 +883,22 @@ function closeFicha(){
   document.getElementById('fichaModal').hidden = true;
   document.body.style.overflow = '';
 }
-document.getElementById('fichaClose').addEventListener('click', closeFicha);
-document.getElementById('fichaBackdrop').addEventListener('click', closeFicha);
-document.getElementById('fichaPoints').addEventListener('click', function(){ closeFicha(); showView('points'); });
-document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeFicha(); });
-document.addEventListener('click', function(e){
-  var a = e.target.closest ? e.target.closest('a[href*="/products/"]') : null;
-  if(!a) return;
-  if(a.closest('#fichaModal')) return;
-  var m = a.getAttribute('href').match(/\/products\/([^/?#]+)/);
-  if(!m) return;
-  e.preventDefault();
-  openFicha(m[1]);
-});
+function initFicha(){
+  document.getElementById('fichaClose').addEventListener('click', closeFicha);
+  document.getElementById('fichaBackdrop').addEventListener('click', closeFicha);
+  document.getElementById('fichaPoints').addEventListener('click', function(){ closeFicha(); showView('points'); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeFicha(); });
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href*="/products/"]') : null;
+    if(!a) return;
+    if(a.closest('#fichaModal')) return;
+    var m = a.getAttribute('href').match(/\/products\/([^/?#]+)/);
+    if(!m) return;
+    e.preventDefault();
+    openFicha(m[1]);
+  });
+}
+if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', initFicha); } else { initFicha(); }
 </script>
 
 <div class="ficha-modal" id="fichaModal" hidden>
