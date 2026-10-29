@@ -418,7 +418,6 @@ img{display:block;max-width:100%}
   <p class="mono" style="color:var(--accent)" data-i18n="view_archive">THE ARCHIVE</p>
   <h2 class="h2" data-i18n="arch_title">THE ARCHIVE — 100 MODELS</h2>
   <select class="pos-select" id="archFamily"></select>
-  <select class="pos-select" id="archSort"><option value="az">A — Z</option><option value="za">Z — A</option></select>
   <div class="arch-grid" id="archGrid"></div>
 </div>
 
@@ -706,12 +705,11 @@ function renderArchive(){
   if(prevFam) famSel.value = prevFam;
   if(!archDone){
     famSel.addEventListener('change', renderArchive);
-    document.getElementById('archSort').addEventListener('change', renderArchive);
     archDone = true;
   }
-  var fam = famSel.value, sort = document.getElementById('archSort').value;
+  var fam = famSel.value;
   var list = PRODUCTS.filter(function(p){ return fam === 'ALL' || p.f === fam; });
-  list.sort(function(a, b){ return sort === 'za' ? b.t.localeCompare(a.t) : a.t.localeCompare(b.t); });
+  list.sort(function(a, b){ return a.t.localeCompare(b.t); });
   grid.innerHTML = list.map(function(p){
     return '<a class="arch-card" href="https://www.thegraphicsproject.com/en/products/' + p.h + '" target="_blank" rel="noopener"><img src="' + p.img + '" alt="' + p.t + '" loading="lazy"><div><b>' + p.t + '</b><span>109 €</span></div></a>';
   }).join('');
@@ -762,7 +760,7 @@ function renderPoints(){
       groups[r].forEach(function(p){
         var gi = POINTS.indexOf(p);
         if(p.province && p.province !== lastProv){ html += '<div class="pos-prov">' + p.province + '</div>'; lastProv = p.province; }
-        html += '<button class="pos-item' + (posSelected === gi ? ' active' : '') + '" data-pos="' + gi + '"><b>' + p.name + '</b><span>' + p.address + '</span><br><a class="tel" href="' + telHref(p.phone) + '" onclick="event.stopPropagation()">' + p.phone + '</a>' + (posSelected === gi ? '<br><a href="https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lon + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--accent);font-weight:700">' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '</a>' : '') + '</button>';
+        html += '<button class="pos-item' + (posSelected === gi ? ' active' : '') + '" data-pos="' + gi + '"><b>' + p.name + '</b><span>' + p.address + '</span><br><a class="tel" href="' + telHref(p.phone) + '" onclick="event.stopPropagation()">' + p.phone + '</a>' + (posSelected === gi ? '<br><a href="https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lon + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--accent);display:inline-block;margin-top:2px" title="' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '" aria-label="' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '">' + '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:block"><path d="M12 2C8.13 2 5 5.13 5 8.5c0 5.25 7 13 7 13s7-7.75 7-13C19 5.13 15.87 2 12 2zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>' + '</a>' : '') + '</button>';
       });
     }
     prevIntl = isIntl; first = false;
@@ -834,7 +832,7 @@ function initOsm(){
   return true;
 }
 function osmPopup(p){
-  return '<b>' + p.name + '</b><br>' + p.address + '<br>' + p.town + ' · ' + p.region + '<br><a href="' + telHref(p.phone) + '">' + p.phone + '</a><br><a href="https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lon + '" target="_blank" rel="noopener">' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '</a>';
+  return '<b>' + p.name + '</b><br>' + p.address + '<br>' + p.town + ' · ' + p.region + '<br><a href="' + telHref(p.phone) + '">' + p.phone + '</a><br><a href="https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lon + '" target="_blank" rel="noopener" title="' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '" aria-label="' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '" style="display:inline-block;margin-top:6px">' + '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:block"><path d="M12 2C8.13 2 5 5.13 5 8.5c0 5.25 7 13 7 13s7-7.75 7-13C19 5.13 15.87 2 12 2zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>' + '</a>';
 }
 function updateOsmMarkers(list){
   if(!osmMap) return;
@@ -842,13 +840,13 @@ function updateOsmMarkers(list){
   if(osmSelectedMarker){ osmMap.removeLayer(osmSelectedMarker); osmSelectedMarker = null; }
   list.forEach(function(p){
     var gi = POINTS.indexOf(p);
-    var c = L.circleMarker([p.lat, p.lon], {radius: 5, color: '#14140c', weight: 1, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.9});
+    var c = L.circleMarker([p.lat, p.lon], {radius: 6, color: '#14140c', weight: 1, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.9});
     c.on('click', function(){ selectPoint(gi); });
     c.addTo(osmLayer);
   });
   if(posSelected !== null){
     var sp = POINTS[posSelected];
-    osmSelectedMarker = L.marker([sp.lat, sp.lon]).addTo(osmMap);
+    osmSelectedMarker = L.circleMarker([sp.lat, sp.lon], {radius: 9, color: '#14140c', weight: 2, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 1}).addTo(osmMap);
     osmSelectedMarker.bindPopup(osmPopup(sp)).openPopup();
   }
 }
@@ -863,7 +861,7 @@ function osmFlyToSelected(){
 function selectPoint(gi){
   posSelected = gi;
   var p = POINTS[gi];
-  document.getElementById('posDetail').innerHTML = '<h3>' + p.name + '</h3><p>' + p.address + '<br>' + p.town + ' · ' + p.region + '</p><p><a href="' + telHref(p.phone) + '">' + p.phone + '</a>' + (p.approx !== 'town' ? ' · <span style="color:#666">posición aproximada</span>' : '') + '</p><p style="margin-top:14px"><a class="btn-yellow" href="https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lon + '" target="_blank" rel="noopener">' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '</a></p>';
+  document.getElementById('posDetail').innerHTML = '<h3>' + p.name + '</h3><p>' + p.address + '<br>' + p.town + ' · ' + p.region + '</p><p><a href="' + telHref(p.phone) + '">' + p.phone + '</a>' + (p.approx !== 'town' ? ' · <span style="color:#666">posición aproximada</span>' : '') + '</p><p style="margin-top:14px"><a class="btn-yellow" href="https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lon + '" target="_blank" rel="noopener" title="' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '" aria-label="' + ((I18N[currentLang] || I18N.EN).open_maps || 'Open in Google Maps') + '" style="padding:12px 14px;display:inline-flex;align-items:center">' + '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:block"><path d="M12 2C8.13 2 5 5.13 5 8.5c0 5.25 7 13 7 13s7-7.75 7-13C19 5.13 15.87 2 12 2zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>' + '</a></p>';
   renderPoints();
   osmFlyToSelected();
   document.getElementById('view-points').querySelector('.pos-map').scrollIntoView({behavior:'smooth', block:'start'});
