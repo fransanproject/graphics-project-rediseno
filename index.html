@@ -254,7 +254,20 @@ img{display:block;max-width:100%}
 .ficha-includes{color:#666666;font-size:14px;margin:0 0 22px}
 .ficha-actions{display:flex;gap:12px;flex-wrap:wrap}
 @media(max-width:700px){.ficha-grid{grid-template-columns:1fr}.ficha-card{padding:20px}}
-.legal-text{color:#cccccc;line-height:1.7;font-size:15px}.legal-text h2,.legal-text h3,.legal-text h4{color:#ffffff;margin:24px 0 8px}.legal-text p{margin:0 0 12px}.legal-text a{color:var(--accent)}@keyframes gpDropFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}} .dropimgwrap img:not(.zoom){animation:gpDropFloat 7s ease-in-out infinite} @keyframes gpSpotZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}} .spot-img img{animation:gpSpotZoom 9s ease-in-out infinite} @keyframes gpProdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}} .cream img{animation:gpProdFloat 5s ease-in-out infinite}.form-card{background:#f4eedc;color:#14140c;border-radius:18px;padding:28px;max-width:760px;margin:28px auto 0} .form-card .form2{margin:0;max-width:none} .form-card .form2 input,.form-card .form2 textarea{color:#14140c} .form-card .form2 label{color:#14140c}#osmMap{overflow:hidden} #osmMap .leaflet-pane,#osmMap .leaflet-tile,#osmMap .leaflet-marker-icon,#osmMap .leaflet-marker-shadow,#osmMap .leaflet-tile-container,#osmMap .leaflet-pane>svg,#osmMap .leaflet-pane>canvas,#osmMap .leaflet-zoom-box,#osmMap .leaflet-image-layer,#osmMap .leaflet-layer{position:absolute;left:0;top:0} #osmMap .leaflet-tile-pane{z-index:200} #osmMap .leaflet-overlay-pane{z-index:400} #osmMap .leaflet-shadow-pane{z-index:500} #osmMap .leaflet-marker-pane{z-index:600} #osmMap .leaflet-popup-pane{z-index:700} #osmMap .leaflet-map-pane{position:absolute;left:0;top:0} #osmMap .leaflet-top,#osmMap .leaflet-bottom{position:absolute;z-index:1000;pointer-events:none} #osmMap .leaflet-top{top:0} #osmMap .leaflet-bottom{bottom:0} #osmMap .leaflet-left{left:0} #osmMap .leaflet-right{right:0} #osmMap .leaflet-control{pointer-events:auto} #osmMap .leaflet-bar a{background:#ffffff;color:#000000;display:block;width:30px;height:30px;line-height:30px;text-align:center;text-decoration:none;font-size:18px;font-weight:900} #osmMap .leaflet-bar{border:2px solid rgba(0,0,0,.3);border-radius:4px;overflow:hidden;background:#ffffff}</style>
+.legal-text{color:#cccccc;line-height:1.7;font-size:15px}.legal-text h2,.legal-text h3,.legal-text h4{color:#ffffff;margin:24px 0 8px}.legal-text p{margin:0 0 12px}.legal-text a{color:var(--accent)}@keyframes gpDropFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}} .dropimgwrap img:not(.zoom){animation:gpDropFloat 7s ease-in-out infinite} @keyframes gpSpotZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}} .spot-img img{animation:gpSpotZoom 9s ease-in-out infinite} @keyframes gpProdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}} .cream img{animation:gpProdFloat 5s ease-in-out infinite}.form-card{background:#f4eedc;color:#14140c;border-radius:18px;padding:28px;max-width:760px;margin:28px auto 0} .form-card .form2{margin:0;max-width:none} .form-card .form2 input,.form-card .form2 textarea{color:#14140c} .form-card .form2 label{color:#14140c}#osmMap{overflow:hidden} #osmMap .leaflet-pane,#osmMap .leaflet-tile,#osmMap .leaflet-marker-icon,#osmMap .leaflet-marker-shadow,#osmMap .leaflet-tile-container,#osmMap .leaflet-pane>svg,#osmMap .leaflet-pane>canvas,#osmMap .leaflet-zoom-box,#osmMap .leaflet-image-layer,#osmMap .leaflet-layer{position:absolute;left:0;top:0} #osmMap .leaflet-tile-pane{z-index:200} #osmMap .leaflet-overlay-pane{z-index:400} #osmMap .leaflet-shadow-pane{z-index:500} #osmMap .leaflet-marker-pane{z-index:600} #osmMap .leaflet-popup-pane{z-index:700} #osmMap .leaflet-map-pane{position:absolute;left:0;top:0} #osmMap .leaflet-top,#osmMap .leaflet-bottom{position:absolute;z-index:1000;pointer-events:none} #osmMap .leaflet-top{top:0} #osmMap .leaflet-bottom{bottom:0} #osmMap .leaflet-left{left:0} #osmMap .leaflet-right{right:0} #osmMap .leaflet-control{pointer-events:auto} #osmMap .leaflet-bar a{background:#ffffff;color:#000000;display:block;width:30px;height:30px;line-height:30px;text-align:center;text-decoration:none;font-size:18px;font-weight:900} #osmMap .leaflet-bar{border:2px solid rgba(0,0,0,.3);border-radius:4px;overflow:hidden;background:#ffffff}
+.map-credit{position:absolute;right:10px;bottom:10px;z-index:500;background:rgba(20,20,12,.72);color:#f4eedc;font-size:11px;letter-spacing:.3px;padding:5px 10px;border-radius:20px}
+.map-credit a{color:inherit}
+.dropcard.reveal{transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.dropcard.reveal.on{transition:transform .25s}
+.reveal{transition-delay:var(--rd,0s)}
+.reveal.on{transition-delay:0s}
+#grid8 .dropcard:nth-child(2){--rd:.08s} #grid8 .dropcard:nth-child(3){--rd:.16s} #grid8 .dropcard:nth-child(4){--rd:.24s} #grid8 .dropcard:nth-child(5){--rd:.32s} #grid8 .dropcard:nth-child(6){--rd:.40s} #grid8 .dropcard:nth-child(7){--rd:.48s} #grid8 .dropcard:nth-child(8){--rd:.56s}
+#carTrack .car-slide:nth-child(2){--rd:.08s} #carTrack .car-slide:nth-child(3){--rd:.16s} #carTrack .car-slide:nth-child(4){--rd:.24s} #carTrack .car-slide:nth-child(5){--rd:.32s}
+@keyframes gpCarBurns{from{transform:scale(1)}to{transform:scale(1.1)}}
+.car-slide img{animation:gpCarBurns 16s ease-in-out infinite alternate}
+.banner img{animation:gpCarBurns 20s ease-in-out infinite alternate}
+@media (prefers-reduced-motion:reduce){.car-slide img,.banner img{animation:none} .reveal{transition:none}}
+</style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -406,7 +419,7 @@ img{display:block;max-width:100%}
       <img id="imgIgape" alt="Xunta de Galicia · IGAPE · Fondos Europeos" style="border:2px solid var(--accent);margin:0 auto">
       <p style="color:#999999" data-i18n="footer_note">Institutional seal from the original footer, with the IGAPE banner summarised in the previous versions.</p>
       <p><a class="btn-black" href="#top" data-i18n="back_top">BACK TO TOP</a></p>
-      <p class="copy">© 2026 GRAPHICS PROJECT · Concepto v46</p>
+      <p class="copy">© 2026 GRAPHICS PROJECT · Concepto v47</p>
     </div>
   </footer>
 </main>
@@ -447,7 +460,7 @@ img{display:block;max-width:100%}
   <select class="pos-select" id="posRegion"><option value="ALL" data-i18n="points_all">All regions</option></select>
   <div class="pos-layout" style="margin-top:20px">
     <div class="pos-map">
-      <div id="osmMap"></div>
+      <div id="osmMap"><div class="map-credit">Mapa © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · Imágenes © <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a></div></div>
       
       <div id="posMapFallback" hidden><div id="posMapSpain"></div><div id="posMapEurope" hidden></div></div>
       <div class="pos-detail" id="posDetail"></div>
@@ -555,7 +568,7 @@ var SIDE = {"xiana-boneca": "data:image/webp;base64,UklGRkhEAABXRUJQVlA4WAoAAAAQ
 ['xiana-boneca','xiana-lunera','xiana-cuore','irune-perica','irune-fenix','irune-drac','javita-baobab','javita-amapola'].forEach(function(h, idx){
   var p = byHandle[h]; if(!p || !grid8El) return;
   var side = SIDE[h];
-  var d = document.createElement('article'); d.className = 'dropcard';
+  var d = document.createElement('article'); d.className = 'dropcard reveal';
   var imgHtml = side
     ? '<div class="dropimgwrap"><img class="front" src="' + p.img + '" alt="' + p.t + ' — frontal view" loading="lazy"><img class="side" src="' + side + '" alt="' + p.t + ' — side view" loading="lazy"></div>'
     : '<div class="dropimgwrap"><img class="front zoom" src="' + p.img + '" alt="' + p.t + ' — frontal view" loading="lazy"></div>';
@@ -569,7 +582,7 @@ var carPrev = document.getElementById('carPrev');
 var carNext = document.getElementById('carNext');
 var carIndex = 0;
 CAROUSEL.forEach(function(c){
-  var a = document.createElement('a'); a.className = 'car-slide'; a.href = 'https://www.thegraphicsproject.com/en/collections/' + c.slug; a.target = '_blank'; a.rel = 'noopener';
+  var a = document.createElement('a'); a.className = 'car-slide reveal'; a.href = 'https://www.thegraphicsproject.com/en/collections/' + c.slug; a.target = '_blank'; a.rel = 'noopener';
   a.innerHTML = '<img src="' + c.img + '" alt="' + c.title + ' — original collection photo" loading="lazy"><span class="car-label">' + c.title + '</span>';
   carTrack.appendChild(a);
 });
@@ -896,8 +909,6 @@ function openFicha(handle){
     document.getElementById('fichaVarilla').textContent = parts[2] + ' mm';
     specs.style.display = '';
   } else { specs.style.display = 'none'; }
-  var orig = document.getElementById('fichaOriginal');
-  orig.href = 'https://www.thegraphicsproject.com/en/products/' + handle;
   document.getElementById('fichaModal').hidden = false;
   document.body.style.overflow = 'hidden';
 }
@@ -943,7 +954,6 @@ if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoad
         <p class="ficha-mats">Montura de acetato de alta calidad termomoldeable para un ajuste perfecto. Lentes con film polarizado japonés TAC polarized. Protección UV, categoría 3. Graduable con lentes de prescripción óptica.</p>
         <p class="ficha-includes">Incluye: estuche y bolsa de microfibra para limpieza.</p>
         <div class="ficha-actions">
-          <a class="btn-yellow" id="fichaOriginal" target="_blank" rel="noopener">Ver en la tienda original</a>
           <button class="btn-black" id="fichaPoints">Buscar tu óptica</button>
         </div>
       </div>
