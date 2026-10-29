@@ -254,7 +254,7 @@ img{display:block;max-width:100%}
 .ficha-includes{color:#666666;font-size:14px;margin:0 0 22px}
 .ficha-actions{display:flex;gap:12px;flex-wrap:wrap}
 @media(max-width:700px){.ficha-grid{grid-template-columns:1fr}.ficha-card{padding:20px}}
-.legal-text{color:#cccccc;line-height:1.7;font-size:15px}.legal-text h2,.legal-text h3,.legal-text h4{color:#ffffff;margin:24px 0 8px}.legal-text p{margin:0 0 12px}.legal-text a{color:var(--accent)}@keyframes gpBlink{0%,100%{opacity:1}50%{opacity:.25}} #osmMap .leaflet-interactive{animation:gpBlink 1s ease-in-out infinite} #posMapSpain .dot,#posMapEurope .dot{animation:gpBlink 1s ease-in-out infinite}@keyframes gpDropFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}} .dropimgwrap img:not(.zoom){animation:gpDropFloat 7s ease-in-out infinite} @keyframes gpSpotZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}} .spot-img img{animation:gpSpotZoom 9s ease-in-out infinite} @keyframes gpProdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}} .cream img{animation:gpProdFloat 5s ease-in-out infinite}</style>
+.legal-text{color:#cccccc;line-height:1.7;font-size:15px}.legal-text h2,.legal-text h3,.legal-text h4{color:#ffffff;margin:24px 0 8px}.legal-text p{margin:0 0 12px}.legal-text a{color:var(--accent)}@keyframes gpBlink{0%,100%{opacity:1}50%{opacity:.1}} #osmMap .leaflet-interactive{animation:gpBlink 1s ease-in-out infinite} #posMapSpain .dot,#posMapEurope .dot{animation:gpBlink 1s ease-in-out infinite}@keyframes gpDropFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}} .dropimgwrap img:not(.zoom){animation:gpDropFloat 7s ease-in-out infinite} @keyframes gpSpotZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}} .spot-img img{animation:gpSpotZoom 9s ease-in-out infinite} @keyframes gpProdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}} .cream img{animation:gpProdFloat 5s ease-in-out infinite}</style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -840,13 +840,13 @@ function updateOsmMarkers(list){
   if(osmSelectedMarker){ osmMap.removeLayer(osmSelectedMarker); osmSelectedMarker = null; }
   list.forEach(function(p){
     var gi = POINTS.indexOf(p);
-    var c = L.circleMarker([p.lat, p.lon], {radius: 8, color: '#14140c', weight: 1, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.9});
+    var c = L.circleMarker([p.lat, p.lon], {radius: 10, color: '#14140c', weight: 1, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 0.9});
     c.on('click', function(){ selectPoint(gi); });
     c.addTo(osmLayer);
   });
   if(posSelected !== null){
     var sp = POINTS[posSelected];
-    osmSelectedMarker = L.circleMarker([sp.lat, sp.lon], {radius: 9, color: '#14140c', weight: 2, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 1}).addTo(osmMap);
+    osmSelectedMarker = L.circleMarker([sp.lat, sp.lon], {radius: 11, color: '#14140c', weight: 2, fillColor: (window.__ACCENT || '#e4d000'), fillOpacity: 1}).addTo(osmMap);
     osmSelectedMarker.bindPopup(osmPopup(sp)).openPopup();
   }
 }
