@@ -106,6 +106,7 @@ img{display:block;max-width:100%}
 .stores .h2{color:var(--accent-ink)}
 .form2{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:760px;margin:28px auto 0;text-align:left}
 .form2 input,.form2 textarea{width:100%;padding:12px 0;border:0;border-bottom:2px solid #14140c;background:transparent;font-size:16px;outline:none}
+.form2 p.full{grid-column:1/-1}
 .form2 label{font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase}
 .footer{background:#000000;padding:60px 6vw 30px}
 .giant-logo{font-size:clamp(72px,16vw,190px);font-weight:900;line-height:1;margin:0;color:#ffffff;text-align:center}
@@ -404,7 +405,7 @@ img{display:block;max-width:100%}
         <p><label><span data-i18n="form_name">NAME</span><br><input type="text" data-i18n-ph="form_name" placeholder="NAME"></label></p>
         <p><label><span data-i18n="form_email">EMAIL *</span><br><input type="email" required data-i18n-ph="form_email" placeholder="EMAIL"></label></p>
         <p><label><span data-i18n="form_phone">PHONE</span><br><input type="tel" data-i18n-ph="form_phone" placeholder="PHONE"></label></p>
-        <p><label><span data-i18n="form_comment">COMMENT</span><br><textarea rows="3" data-i18n-ph="form_comment" placeholder="COMMENT"></textarea></label></p>
+        <p class="full"><label><span data-i18n="form_comment">COMMENT</span><br><textarea rows="3" data-i18n-ph="form_comment" placeholder="COMMENT"></textarea></label></p>
       </form>
       <p style="margin-top:28px"><button class="btn-black" onclick="document.getElementById('storesSent').hidden=false;return false" data-i18n="send_btn">SEND</button></p>
       <p id="storesSent" hidden style="color:var(--accent);font-weight:900" data-i18n="contact_sent">Message sent (demo, no backend).</p>
@@ -422,7 +423,7 @@ img{display:block;max-width:100%}
       <img id="imgIgape" alt="Xunta de Galicia · IGAPE · Fondos Europeos" style="border:2px solid var(--accent);margin:0 auto">
       <p style="color:#999999" data-i18n="footer_note">Institutional seal from the original footer, with the IGAPE banner summarised in the previous versions.</p>
       <p><a class="btn-black" href="#top" data-i18n="back_top">BACK TO TOP</a></p>
-      <p class="copy">© 2026 GRAPHICS PROJECT · Concepto v63</p>
+      <p class="copy">© 2026 GRAPHICS PROJECT · Concepto v64</p>
     </div>
   </footer>
 </main>
@@ -480,7 +481,7 @@ img{display:block;max-width:100%}
     <p><label data-i18n="form_name">NAME</label><br><input type="text"></p>
     <p><label data-i18n="form_email">EMAIL *</label><br><input type="email" required></p>
     <p><label data-i18n="form_phone">PHONE</label><br><input type="tel"></p>
-    <p><label data-i18n="form_comment">COMMENT</label><br><textarea rows="4"></textarea></p>
+    <p class="full"><label data-i18n="form_comment">COMMENT</label><br><textarea rows="4"></textarea></p>
     <p><button class="btn-black" type="submit" data-i18n="send_btn">SUBMIT</button></p>
   </form>
   <p id="contactSent" hidden style="color:var(--accent);font-weight:900" data-i18n="contact_sent">Message sent (demo, no backend).</p></div>
